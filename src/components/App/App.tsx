@@ -1,12 +1,17 @@
 import React from 'react';
-
 import './App.css';
+import { Container } from 'react-bootstrap';
+import { faHouseChimney } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { MainMenu } from './MainMenu/MainMenu';
+
 
 function App() {
   return (
-    <div className="App">
-   Home
-    </div>
+    <Container>
+      <MainMenu></MainMenu>
+     <FontAwesomeIcon icon= { faHouseChimney } /> Home
+    </Container>
   );
 }
 
