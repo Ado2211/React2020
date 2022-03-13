@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Nav } from "react-bootstrap";
+import { HashRouter, Link } from "react-router-dom";
 
 export class MainMenuItem {
     text: string = '';
@@ -26,33 +27,34 @@ export class MainMenu extends React.Component<MainMenuProperties> {
         super(props);
 
         this.state = {
-        items: props.items,
+            items: props.items,
         };
 
     }
- 
+
     setItems(items: MainMenuItem[]) {
         this.setState({
             items: items,
         })
     }
- 
+
     render() {
         return (
             <Container>
                 <Nav variant="tabs">
-                    { this.state.items.map(this.makeNavLink) }
-
+                    <HashRouter>
+                        {this.state.items.map(this.makeNavLink)}
+                    </HashRouter>
                 </Nav>
             </Container>
         );
     }
 
     private makeNavLink(item: MainMenuItem) {
-        return(
-        <Nav.Link href={item.link}>
-            {item.text}
-        </Nav.Link>
+        return (
+            <Link to={item.link} className="nav-link">
+                {item.text}
+            </Link>
         );
     }
 }
