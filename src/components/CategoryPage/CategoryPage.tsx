@@ -47,11 +47,12 @@ export default class CategoryPage extends React.Component<CategoryPageProperties
         this.getCategoryData();
     }
 
-    componentWillReceiveProps( newProperties: CategoryPageProperties) {
-        if ( newProperties.match.params.cId === this.props.match.params.cId) {
+    componentDidUpdate(oldProperties: CategoryPageProperties) {
+        if (oldProperties.match.params.cId === this.props.match.params.cId) {
             return;
         }
-        return  this.getCategoryData();
+
+        this.getCategoryData();
     }
 
     private getCategoryData() {
