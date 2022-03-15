@@ -32,7 +32,7 @@ export class MainMenu extends React.Component<MainMenuProperties> {
 
     }
 
-    setItems(items: MainMenuItem[]) {
+ setItems(items: MainMenuItem[]) {
         this.setState({
             items: items,
         })

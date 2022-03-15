@@ -79,7 +79,7 @@ async function responseHandler(
 
 function getToken(role: 'user' | 'administrator'): string {
     const token = localStorage.getItem('api_token' + role);
-    return 'Berer ' + token;
+    return 'Bearer ' + token;
 }
 
 export function saveToken(role: 'user' | 'administrator', token: string) {

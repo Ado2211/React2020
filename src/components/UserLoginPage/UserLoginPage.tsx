@@ -79,8 +79,8 @@ export default class UserLoginPage extends React.Component {
                         return;
                     }
 
-                    saveToken('user',res.data.token);
-                    saveRefreshToken('user',res.data.refreshToken);
+                    saveToken('user', res.data.token);
+                    saveRefreshToken('user', res.data.refreshToken);
 
                     this.setLogginState(true);
                 }
@@ -88,11 +88,11 @@ export default class UserLoginPage extends React.Component {
     }
 
     render() {
-     if ( this.state.isLoggedIn === true) {
-         return (
-             <Redirect to="/" />
-         );
-     }
+        if (this.state.isLoggedIn === true) {
+            return (
+                <Redirect to="/" />
+            );
+        }
         return (
             <Container>
                 <Col md={{ span: 6, offset: 3 }}>
@@ -108,21 +108,23 @@ export default class UserLoginPage extends React.Component {
                                         value={this.state.email}
                                         onChange={event => this.formInputChanged(event as any)} />
                                 </Form.Group>
+
                                 <Form.Group>
                                     <Form.Label htmlFor="password">Password:</Form.Label>
                                     <Form.Control type="password" id="password"
                                         value={this.state.password}
                                         onChange={event => this.formInputChanged(event as any)} />
-                                    <Form.Group>
-                                        <Button variant="primary"
-                                            onClick={() => this.doLogin()}>
-                                            Log in
-                                        </Button>
-                                    </Form.Group>
+                                </Form.Group>
+
+                                <Form.Group>
+                                    <Button variant="primary"
+                                        onClick={() => this.doLogin()}>
+                                        Log in
+                                    </Button>
                                 </Form.Group>
                             </Form>
-                            <Alert variant="danger" className={ this.state.errorMessage ? '' : 'd-none'}>
-                                { this.state.errorMessage}</Alert>
+                            <Alert variant="danger" className={this.state.errorMessage ? '' : 'd-none'}>
+                                {this.state.errorMessage}</Alert>
                         </Card.Body>
                     </Card>
                 </Col>
