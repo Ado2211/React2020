@@ -1,6 +1,5 @@
 import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { throws } from "assert";
 import React from "react";
 import { Alert, Button, Card, Col, Container, Form } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
@@ -35,7 +34,7 @@ export default class UserLoginPage extends React.Component {
         this.setState(newState)
     }
 
-    private setErrorMesage(message: string) {
+    private setErrorMessage(message: string) {
         const newState = Object.assign(this.state, {
             errorMessage: message,
         });
@@ -52,39 +51,43 @@ export default class UserLoginPage extends React.Component {
     }
 
 
-    private doLogin() {
-        api('auth/user/login', 'post',
+      private doLogin() {
+        api(
+            'auth/user/login',
+            'post',
             {
                 email: this.state.email,
                 password: this.state.password,
             }
         )
-            .then((res: ApiResponse) => {
-                if (res.status === 'error') {
-                    this.setErrorMesage('System error.');
+        .then((res: ApiResponse) => {
+            console.log(res)
+            if (res.status === 'error') {
+                this.setErrorMessage('System error... Try again!');
+
+                return;
+            }
+
+            if (res.status === 'ok') {
+                if ( res.data.statusCode !== undefined ) {
+                    let message = 'afdadf';
+
+                    switch (res.data.statusCode) {
+                        case -3001: message = 'Unkwnon e-mail!'; break;
+                        case -3002: message = 'Bad password!'; break;
+                    }
+
+                    this.setErrorMessage(message);
+
                     return;
                 }
 
-                if (res.status === 'ok') {
-                    if (res.data.statusCode !== undefined) {
-                        let message = '';
+                saveToken('user', res.data.token);
+                saveRefreshToken('user', res.data.refreshToken);
 
-                        switch (res.data.statusCode) {
-                            case -3001: message = 'Unknown e-mail!'; break;
-                            case -3002: message = 'Wrong password!'; break;
-                        }
-
-                        this.setErrorMesage(message);
-
-                        return;
-                    }
-
-                    saveToken('user', res.data.token);
-                    saveRefreshToken('user', res.data.refreshToken);
-
-                    this.setLogginState(true);
-                }
-            });
+                this.setLogginState(true);
+            }
+        });
     }
 
     render() {
