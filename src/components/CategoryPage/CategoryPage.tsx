@@ -274,7 +274,7 @@ export default class CategoryPage extends React.Component<CategoryPageProperties
                 { this.state.features.map(this.printFeatureFilterComponent, this) }
 
                 <Form.Group>
-                    <Button variant="primary block"  onClick={ () => this.applyFilters() }>
+                    <Button variant="primary" size="lg" onClick={ () => this.applyFilters() }>
                         <FontAwesomeIcon icon={ faSearch } /> Search
                     </Button>
                 </Form.Group>
