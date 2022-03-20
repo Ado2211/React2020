@@ -30,6 +30,7 @@ export default class RoledMainMenu extends React.Component<RoledMainMenuProperti
             new MainMenuItem("Contact", "/contact/"),
             new MainMenuItem("My Orders", "/user/orders/"),
             new MainMenuItem("Log out", "/user/logout/"),
+            new MainMenuItem("User log in", "/user/login/"),
         ];
     }
 
@@ -42,9 +43,11 @@ export default class RoledMainMenu extends React.Component<RoledMainMenuProperti
 
     getVisitorMenuItems(): MainMenuItem[] {
         return [
+            new MainMenuItem("Home", "/"),
             new MainMenuItem("Register", "/user/register/"),
             new MainMenuItem("User log in", "/user/login/"),
             new MainMenuItem("Administrator log in", "/administrator/login/"),
+            
         ];
     }
 }

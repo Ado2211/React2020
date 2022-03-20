@@ -4,6 +4,7 @@ import React from "react";
 import { Alert, Button, Card, Col, Container, Form } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import api, { ApiResponse, saveToken, saveRefreshToken } from '../../api/api';
+import RoledMainMenu from "../RoledMainMenu/RoledMainMenu";
 
 interface UserLoginPageState {
     email: string;
@@ -50,8 +51,7 @@ export default class UserLoginPage extends React.Component {
         this.setState(newState);
     }
 
-
-      private doLogin() {
+    private doLogin() {
         api(
             'auth/user/login',
             'post',
@@ -60,34 +60,34 @@ export default class UserLoginPage extends React.Component {
                 password: this.state.password,
             }
         )
-        .then((res: ApiResponse) => {
-            console.log(res)
-            if (res.status === 'error') {
-                this.setErrorMessage('System error... Try again!');
-
-                return;
-            }
-
-            if (res.status === 'ok') {
-                if ( res.data.statusCode !== undefined ) {
-                    let message = 'afdadf';
-
-                    switch (res.data.statusCode) {
-                        case -3001: message = 'Unkwnon e-mail!'; break;
-                        case -3002: message = 'Bad password!'; break;
-                    }
-
-                    this.setErrorMessage(message);
+            .then((res: ApiResponse) => {
+                console.log(res)
+                if (res.status === 'error') {
+                    this.setErrorMessage('System error... Try again!');
 
                     return;
                 }
 
-                saveToken('user', res.data.token);
-                saveRefreshToken('user', res.data.refreshToken);
+                if (res.status === 'ok') {
+                    if (res.data.statusCode !== undefined) {
+                        let message = 'afdadf';
 
-                this.setLogginState(true);
-            }
-        });
+                        switch (res.data.statusCode) {
+                            case -3001: message = 'Unkwnon e-mail!'; break;
+                            case -3002: message = 'Bad password!'; break;
+                        }
+
+                        this.setErrorMessage(message);
+
+                        return;
+                    }
+
+                    saveToken('user', res.data.token);
+                    saveRefreshToken('user', res.data.refreshToken);
+
+                    this.setLogginState(true);
+                }
+            });
     }
 
     render() {
@@ -98,6 +98,8 @@ export default class UserLoginPage extends React.Component {
         }
         return (
             <Container>
+                <RoledMainMenu role="visitor" />
+
                 <Col md={{ span: 6, offset: 3 }}>
                     <Card>
                         <Card.Body>
