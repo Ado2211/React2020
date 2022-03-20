@@ -274,7 +274,7 @@ export default class CategoryPage extends React.Component<CategoryPageProperties
                 { this.state.features.map(this.printFeatureFilterComponent, this) }
 
                 <Form.Group>
-                    <Button variant="primary" size="lg" onClick={ () => this.applyFilters() }>
+                    <Button variant="primary"  onClick={ () => this.applyFilters() }>
                         <FontAwesomeIcon icon={ faSearch } /> Search
                     </Button>
                 </Form.Group>
@@ -379,6 +379,7 @@ export default class CategoryPage extends React.Component<CategoryPageProperties
     private getCategoryData() {
         api('api/category/' + this.props.match.params.cId, 'get', {})
         .then((res: ApiResponse) => {
+           
             if (res.status === 'login') {
                 return this.setLogginState(false);
             }
