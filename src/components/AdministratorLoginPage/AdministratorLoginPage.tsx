@@ -100,6 +100,7 @@ export default class AdministratorLoginPage extends React.Component {
         return (
             <Container>
                 <RoledMainMenu role="visitor" />
+                
 
                 <Col md={ { span: 6, offset: 3 } }>
                     <Card>

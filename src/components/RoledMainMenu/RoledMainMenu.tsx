@@ -31,6 +31,7 @@ export default class RoledMainMenu extends React.Component<RoledMainMenuProperti
             new MainMenuItem("My Orders", "/user/orders/"),
             new MainMenuItem("Log out", "/user/logout/"),
             new MainMenuItem("User log in", "/user/login/"),
+            new MainMenuItem("Administrator log in", "/administrator/login/"),
         ];
     }
 

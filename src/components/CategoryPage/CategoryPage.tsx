@@ -379,7 +379,6 @@ export default class CategoryPage extends React.Component<CategoryPageProperties
     private getCategoryData() {
         api('api/category/' + this.props.match.params.cId, 'get', {})
         .then((res: ApiResponse) => {
-           
             if (res.status === 'login') {
                 return this.setLogginState(false);
             }
