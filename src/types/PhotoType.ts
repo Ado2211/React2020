@@ -1,8 +1,4 @@
-import CartType from "./CartType";
-
-export default interface OrderType {
-    orderId: number;
-    createdAt: string;
-    status: string;
-    cart: CartType;
+export default interface PhotoType {
+    photoId: number;
+    imagePath: string;
 }
