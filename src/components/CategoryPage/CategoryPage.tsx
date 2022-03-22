@@ -131,6 +131,7 @@ export default class CategoryPage extends React.Component<CategoryPageProperties
         return (
             <Container>
                 <RoledMainMenu role="user" />
+                
 
                 <Card>
                     <Card.Body>

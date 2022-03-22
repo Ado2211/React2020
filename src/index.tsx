@@ -15,7 +15,7 @@ import { UserRegistrationPage } from './components/UserRegistrationPage/UserRegi
 // import OrdersPage from './components/OrdersPage/OrdersPage';
 import AdministratorLoginPage from './components/AdministratorLoginPage/AdministratorLoginPage';
 import AdministratorDashboard from './components/AdministratorDashboard/AdministratorDashboard';
-// import AdministratorDashboardCategory from './components/AdministratorDashboardCategory/AdministratorDashboardCategory';
+ import AdministratorDashboardCategory from './components/AdministratorDashboardCategory/AdministratorDashboardCategory';
 // import AdministratorDashboardFeature from './components/AdministratorDashboardFeature/AdministratorDashboardFeature';
 // import AdministratorDashboardArticle from './components/AdministratorDashboardArticle/AdministratorDashboardArticle';
 // import AdministratorDashboardPhoto from './components/AdministratorDashboardPhoto/AdministratorDashboardPhoto';
@@ -40,11 +40,11 @@ ReactDOM.render(
         <Route path="/administrator/login" component={ AdministratorLoginPage } />
         <Route path="/administrator/logout" component={ AdministratorLogoutPage } />
         <Route exact path="/administrator/dashboard/" component={ AdministratorDashboard } />
-        {/* <Route path="/administrator/dashboard/category/" component={ AdministratorDashboardCategory } />
-        <Route path="/administrator/dashboard/feature/:cId" component={ AdministratorDashboardFeature } />
+         <Route path="/administrator/dashboard/category/" component={ AdministratorDashboardCategory } />
+        {/* <Route path="/administrator/dashboard/feature/:cId" component={ AdministratorDashboardFeature } />
         <Route path="/administrator/dashboard/article/" component={ AdministratorDashboardArticle } />
         <Route path="/administrator/dashboard/photo/:aId" component={ AdministratorDashboardPhoto } />
-        <Route path="/administrator/dashboard/order" component={ AdministratorDashboardOrder } />  */}
+        <Route path="/administrator/dashboard/order" component={ AdministratorDashboardOrder } />   */}
       </Switch>
     </HashRouter>
   </React.StrictMode>,
