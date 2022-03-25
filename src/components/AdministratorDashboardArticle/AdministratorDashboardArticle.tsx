@@ -457,7 +457,7 @@ class AdministratorDashboardArticle extends React.Component {
                         </Form.Group>
                         { this.state.addModal.message ? (
                             <Alert variant="danger" defaultValue={ this.state.addModal.message } />
-                        ) : '' }
+                        ) : 'Cant add' }
                     </Modal.Body>
                 </Modal>
 

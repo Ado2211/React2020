@@ -150,7 +150,7 @@ export default class AdministratorDashboardOrder extends React.Component {
                             <td>
                                 <Button size="sm" variant="primary"
                                         onClick={ () => this.setAndShowCart(order.cart) }>
-                                    <FontAwesomeIcon icon={ faBoxOpen } />
+                                    <FontAwesomeIcon icon={ faBoxOpen } />Cart Details
                                 </Button>
                             </td>
                             <td>
