@@ -24,6 +24,7 @@ import AdministratorDashboardOrder from './components/AdministratorDashboardOrde
 import { AdministratorLogoutPage } from './components/AdministratorLogoutPage/AdministratorLogoutPage';
 import { UserLogoutPage } from './components/UserLogoutPage/UserLogoutPage';
 import reportWebVitals from './reportWebVitals';
+import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -51,6 +52,6 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-
+serviceWorker.unregister();
 
 reportWebVitals();

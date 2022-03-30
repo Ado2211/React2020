@@ -132,7 +132,7 @@ async function responseHandler(
 
 function getToken(role: 'user' | 'administrator'): string {
     const token = localStorage.getItem('api_token' + role);
-    return 'Berer ' + token;
+    return 'Bearer ' + token;
 }
 
 export function saveToken(role: 'user' | 'administrator', token: string) {
@@ -154,7 +154,7 @@ export function saveIdentity(role: 'user' | 'administrator', itentity: string) {
 
 export function getIdentity(role: 'user' | 'administrator'): string {
     const token = localStorage.getItem('api_identity' + role);
-    return 'Berer ' + token;
+    return 'Bearer ' + token;
 }
 
 export function removeTokenData(role: 'user' | 'administrator') {
