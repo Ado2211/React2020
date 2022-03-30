@@ -5,4 +5,5 @@ export default interface OrderType {
     createdAt: string;
     status: string;
     cart: CartType;
+    
 }

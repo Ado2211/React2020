@@ -47,16 +47,16 @@ class AdministratorDashboardPhoto extends React.Component<AdministratorDashboard
 
     private getPhotos() {
         api('/api/article/' + this.props.match.params.aId + '/?join=photos', 'get', {}, 'administrator')
-        .then((res: ApiResponse) => {
-            if (res.status === "error" || res.status === "login") {
-                this.setLogginState(false);
-                return;
-            }
+            .then((res: ApiResponse) => {
+                if (res.status === "error" || res.status === "login") {
+                    this.setLogginState(false);
+                    return;
+                }
 
-            this.setState(Object.assign(this.state, {
-                photos: res.data.photos,
-            }));
-        });
+                this.setState(Object.assign(this.state, {
+                    photos: res.data.photos,
+                }));
+            });
     }
 
     private setLogginState(isLoggedIn: boolean) {
@@ -79,19 +79,20 @@ class AdministratorDashboardPhoto extends React.Component<AdministratorDashboard
                 <Card>
                     <Card.Body>
                         <Card.Title>
-                            <FontAwesomeIcon icon={ faImages } /> Photos
+                            <FontAwesomeIcon icon={faImages} /> Photos
                         </Card.Title>
 
                         <Nav className="mb-3">
                             <Nav.Item>
                                 <Link to="/administrator/dashboard/article/" className="btn btn-sm btn-info">
-                                    <FontAwesomeIcon icon={ faBackward } /> Go back to articles
+                                    <FontAwesomeIcon icon={faBackward} /> Go back to articles
                                 </Link>
                             </Nav.Item>
                         </Nav>
 
                         <Row>
-                            { this.state.photos.map(this.printSinglePhoto, this) }
+                            {this.state.photos.map(this.printSinglePhoto, this)}
+
                         </Row>
 
                         <Form className="mt-5">
@@ -104,8 +105,8 @@ class AdministratorDashboardPhoto extends React.Component<AdministratorDashboard
                             </Form.Group>
                             <Form.Group>
                                 <Button variant="primary"
-                                        onClick={ () => this.doUpload() }>
-                                    <FontAwesomeIcon icon={ faPlus } /> Upload photo
+                                    onClick={() => this.doUpload()}>
+                                    <FontAwesomeIcon icon={faPlus} /> Upload photo
                                 </Button>
                             </Form.Group>
                         </Form>
@@ -120,23 +121,23 @@ class AdministratorDashboardPhoto extends React.Component<AdministratorDashboard
             <Col xs="12" sm="6" md="4" lg="3">
                 <Card>
                     <Card.Body>
-                        <img alt={ "Photo " + photo.photoId }
-                             src={ ApiConfig.PHOTO_PATH + 'small/' + photo.imagePath }
-                             className="w-100" />
+                        <img alt={"Photo " + photo.photoId}
+                            src={ApiConfig.PHOTO_PATH + 'small/' + photo.imagePath}
+                            className="w-100" />
                     </Card.Body>
                     <Card.Footer>
-                        { this.state.photos.length > 1 ? (
-                            <Button variant="danger" size="lg"
-                                onClick={ () => this.deletePhoto(photo.photoId) }>
-                                <FontAwesomeIcon icon={ faMinus } /> Delete photo
+                        {this.state.photos.length > 0 ? (
+                            <Button variant="danger" size="sm"
+                                onClick={() => this.deletePhoto(photo.photoId)}>
+                                <FontAwesomeIcon icon={faMinus} /> Delete photo
                             </Button>
-                        ) : '' }
+                        ) : ''}
                     </Card.Footer>
                 </Card>
             </Col>
         );
     }
-    
+
     private async doUpload() {
         const filePicker: any = document.getElementById('add-photo');
 
@@ -161,14 +162,14 @@ class AdministratorDashboardPhoto extends React.Component<AdministratorDashboard
         }
 
         api('/api/article/' + this.props.match.params.aId + '/deletePhoto/' + photoId + '/', 'delete', {}, 'administrator')
-        .then((res: ApiResponse) => {
-            if (res.status === "error" || res.status === "login") {
-                this.setLogginState(false);
-                return;
-            }
+            .then((res: ApiResponse) => {
+                if (res.status === "error" || res.status === "login") {
+                    this.setLogginState(false);
+                    return;
+                }
 
-            this.getPhotos();
-        })
+                this.getPhotos();
+            })
     }
 }
 

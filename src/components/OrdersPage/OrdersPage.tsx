@@ -19,31 +19,7 @@ interface OrderDto {
     orderId: number;
     createdAt: string;
     status: "rejected" | "accepted" | "shipped" | "pending";
-    cart: {
-        cartId: number;
-        createdAt: string;
-        cartArticles: {
-            quantity: number;
-            article: {
-                articleId: number;
-                name: string;
-                excerpt: string;
-                status: "available" | "visible" | "hidden";
-                isPromoted: number;
-                category: {
-                    categoryId: number;
-                    name: string;
-                },
-                articlePrices: {
-                    createdAt: string;
-                    price: number;
-                }[];
-                photos: {
-                    imagePath: string;
-                }[];
-            };
-        }[];
-    };
+    cart: CartType
 }
 
 export default class OrdersPage extends React.Component {
@@ -137,6 +113,9 @@ export default class OrdersPage extends React.Component {
                     }))
                 }
             }));
+        
+          
+ 
 
             this.setOrdersState(orders);
         });
