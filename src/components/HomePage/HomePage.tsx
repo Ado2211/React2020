@@ -1,42 +1,105 @@
 import React from 'react';
-import { Card, Col, Container, Row } from 'react-bootstrap';
-import { faListAlt } from '@fortawesome/free-solid-svg-icons';
+import { Container, Card, Table, Button, Modal, Form, Alert, Col, Row } from 'react-bootstrap';
+import { faListAlt, faPlus, faEdit, faSave, faImages, faDeleteLeft, faHockeyPuck, faListSquares } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import CategoryType from '../../types/CategoryType';
-import { Link, Redirect } from 'react-router-dom';
-import api, { ApiResponse } from '../../api/api';
+import { Redirect, Link } from 'react-router-dom';
+import api, { ApiResponse, apiFile } from '../../api/api';
 import RoledMainMenu from '../RoledMainMenu/RoledMainMenu';
+import ArticleType from '../../types/ArticleType';
+import ApiArticleDto from '../../dtos/ApiArticleDto';
+import CategoryType from '../../types/CategoryType';
 import ApiCategoryDto from '../../dtos/ApiCategoryDto';
+import SingleArticlePreview from '../SingleArticlePreview/SingleArticlePreview';
+import CategoryPage from '../CategoryPage/CategoryPage';
 
 
-interface HomePageState {
+
+
+
+
+interface AH8q3dGK2f2vLZVgbRfLTjQPySe2yRaJHs {
   isUserLoggedIn: boolean;
+  articles: ArticleType[];
   categories: CategoryType[];
+  status: string[];
+  filters: {
+    keywords: string;
+    priceMininum: number;
+    priceMaximum: number;
+    order: "name asc" | "name desc" | "price asc" | "price desc";
+    selectedFeatures: {
+        featureId: number;
+        value: string;
+    }[];
+};
+features: {
+    featureId: number;
+    name: string;
+    values: string[];
+}[];
+  
+}
 
+interface FeatureBaseType {
+  featureId: number;
+  name: string;
 }
 
 class HomePage extends React.Component {
-  state: HomePageState;
+  state: AH8q3dGK2f2vLZVgbRfLTjQPySe2yRaJHs;
 
   constructor(props: Readonly<{}>) {
     super(props);
 
     this.state = {
-      isUserLoggedIn: false,
+      isUserLoggedIn: true,
+      articles: [],
       categories: [],
+      status: [
+        "available",
+        "visible",
+        "hidden",
+      ],
+
+      filters: {
+        keywords: '',
+        priceMininum: 0.01,
+        priceMaximum: 100000,
+        order: "price asc",
+        selectedFeatures: [],
+    },
+    features: [],
     };
   }
 
+  
+
   componentDidMount() {
     this.getCategories();
+    this.getArticles();
   }
 
-  componentDidUpdate() {
-    this.getCategories();
+  private async getFeaturesByCategoryId(categoryId: number): Promise<FeatureBaseType[]> {
+    return new Promise(resolve => {
+      api('/api/feature/?filter=categoryId||$eq||' + categoryId + '/', 'get', {}, 'user')
+        .then((res: ApiResponse) => {
+          if (res.status === "error" || res.status === "login") {
+            this.setLogginState(false);
+            return resolve([]);
+          }
+
+          const features: FeatureBaseType[] = res.data.map((item: any) => ({
+            featureId: item.featureId,
+            name: item.name,
+          }));
+
+          resolve(features);
+        })
+    })
   }
 
   private getCategories() {
-    api('api/category/?filter=parentCategoryId||$isnull', 'get', {})
+    api('/api/category/', 'get', {}, 'user')
       .then((res: ApiResponse) => {
         if (res.status === "error" || res.status === "login") {
           this.setLogginState(false);
@@ -47,75 +110,134 @@ class HomePage extends React.Component {
       });
   }
 
-  private putCategoriesInState(data: ApiCategoryDto[]) {
-    const categories: CategoryType[] = data?.map(category => {
+  private putCategoriesInState(data?: ApiCategoryDto[]) {
+    const categories: CategoryType[] | undefined = data?.map(category => {
       return {
         categoryId: category.categoryId,
         name: category.name,
-        items: [],
+        imagePath: category.imagePath,
+        parentCategoryId: category.parentCategoryId,
       };
     });
 
-    const newState = Object.assign(this.state, {
+    this.setState(Object.assign(this.state, {
       categories: categories,
-    })
+    }));
+  }
 
-    this.setState(newState);
+  private getArticles() {
+    api('/api/article/?join=articleFeatures&join=features&join=articlePrices&join=photos&join=category', 'get', {}, 'user')
+      .then((res: ApiResponse) => {
+        if (res.status === "error" || res.status === "login") {
+          this.setLogginState(false);
+          return;
+        }
+
+        this.putArticlesInState(res.data);
+      });
+  }
+
+  private putArticlesInState(data?: ApiArticleDto[]) {
+    const articles: ArticleType[] | undefined = data?.map(article => {
+      return {
+        articleId: article.articleId,
+        name: article.name,
+        excerpt: article.excerpt,
+        description: article.description,
+
+        price: article.articlePrices[article.articlePrices.length - 1].price,
+        status: article.status,
+        isPromoted: article.isPromoted,
+        articleFeatures: article.articleFeatures,
+        features: article.features,
+        articlePrices: article.articlePrices,
+        photos: article.photos,
+        category: article.category,
+        categoryId: article.categoryId,
+      };
+    });
+
+    this.setState(Object.assign(this.state, {
+      articles: articles,
+    }));
   }
 
   private setLogginState(isLoggedIn: boolean) {
-    const newState = Object.assign(this.state, {
+    this.setState(Object.assign(this.state, {
       isUserLoggedIn: isLoggedIn,
-    });
-
-    this.setState(newState);
+    }));
   }
 
+  
+
   render() {
-    if (this.state.isUserLoggedIn === true) {
+    if (this.state.isUserLoggedIn === false) {
       return (
-        <Redirect to="/user/login/" />
+        <Redirect to="/user/login" />
       );
     }
 
     return (
-      <Container>
-        <RoledMainMenu role="user" />
-        <Card>
-          <Card.Body>
-            <Card.Title>
-              <FontAwesomeIcon icon={faListAlt} /> Top level categories
-            </Card.Title>
+      <>
 
-            <Row>
-              {this.state.categories.map(this.singleCategory)}
-            </Row>
 
-          </Card.Body>
-        </Card>
-      </Container>
+
+        <Container>
+          <RoledMainMenu role="user" />
+
+          <Container>
+            <Link to="/user/categories/" className="btn btn-sm btn-info">
+              <FontAwesomeIcon icon={faListSquares} /> Categories
+            </Link>
+          </Container>
+
+          <Card>
+            <Card.Body>
+              <Card.Title>
+                <FontAwesomeIcon icon={faListAlt} /> All Articles
+              </Card.Title>
+
+
+              <Row>
+             
+
+                <Col xs="12" md="12" lg="12">
+                  {this.showArticles()}
+                </Col>
+              </Row>
+
+
+            </Card.Body>
+          </Card>
+        </Container>
+      </>
     );
   }
 
-  private singleCategory(category: CategoryType) {
+ 
+
+  private showArticles() {
+    if (this.state.articles?.length === 0) {
+      return (
+        <div>There are no articles in this category.</div>
+      );
+    }
+
     return (
-      <Col lg="3" md="4" sm="6" xs="12">
-        <Card className="mb-3" >
-          <Card.Body>
-            <Card.Title className="text-center" as="p">
-              {category.name}
-            </Card.Title>
-            <Link to={`/category/${category.categoryId}`}
-              className="btn btn-primary d-grid gap-2 btn-sm ">
-              Open category</Link>
-          </Card.Body>
-        </Card>
-      </Col>
+      <Row>
+        {this.state.articles?.map(this.singleArticle)}
+      </Row>
+    );
+
+  }
+
+  private singleArticle(article: ArticleType) {
+    return (
+      <SingleArticlePreview article={article} key={'Article ' + article.articleId} />
     );
   }
 }
 
-export default HomePage;
 
 
-
+export default HomePage

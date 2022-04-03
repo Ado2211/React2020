@@ -289,7 +289,7 @@ class AdministratorDashboardArticle extends React.Component {
                 name: article.name,
                 excerpt: article.excerpt,
                 description: article.description,
-
+                
                 price: article.articlePrices[article.articlePrices.length - 1].price,
                 status: article.status,
                 isPromoted: article.isPromoted,

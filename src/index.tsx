@@ -25,6 +25,8 @@ import { AdministratorLogoutPage } from './components/AdministratorLogoutPage/Ad
 import { UserLogoutPage } from './components/UserLogoutPage/UserLogoutPage';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
+import { Categories } from './components/Categories/categories';
+
 
 ReactDOM.render(
   <React.StrictMode>
@@ -38,6 +40,7 @@ ReactDOM.render(
         <Route path="/category/:cId" component={CategoryPage} />
         <Route path="/article/:aId" component={ArticlePage} />
         <Route path="/user/orders" component={OrdersPage} />
+        <Route path="/user/categories" component={Categories} />
         <Route path="/administrator/login" component={AdministratorLoginPage} />
         <Route path="/administrator/logout" component={AdministratorLogoutPage} />
         <Route exact path="/administrator/dashboard/" component={AdministratorDashboard} />
