@@ -233,7 +233,7 @@ class AdministratorDashboardCategory extends React.Component {
                         </Form.Group>
                         <Form.Group>
                             <Button variant="primary" onClick={ () => this.doAddCategory() }>
-                                <FontAwesomeIcon icon={ faPlus } /> Add new category
+                            Add new category  <FontAwesomeIcon icon={ faPlus } /> 
                             </Button>
                         </Form.Group>
                         { this.state.addModal.message ? (

@@ -12,7 +12,7 @@ interface SingleArticlePreviewProperties {
 export default class SingleArticlePreview extends React.Component<SingleArticlePreviewProperties> {
     render() {
         return (
-            <Col lg="4" md="6" sm="6" xs="12">
+            <Col lg="3" md="4" sm="6" xs="12">
                 <Card className="mb-3">
                     <Card.Header>
                         <img alt={ this.props.article.name }
