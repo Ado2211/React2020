@@ -29,4 +29,5 @@ export default class ArticleType {
     category?: {
         name: string;
     };
+    static photos: any;
 }

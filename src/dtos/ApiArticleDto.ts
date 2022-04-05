@@ -2,6 +2,7 @@ export default interface ApiArticleDto {
     articleId: number;
     name: string;
     categoryId: number;
+    imageUrl: string;
     excerpt: string;
     description: string;
     status: "available" | "visible" | "hidden";

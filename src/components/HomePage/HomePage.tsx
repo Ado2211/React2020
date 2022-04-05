@@ -20,7 +20,6 @@ import CategoryPage from '../CategoryPage/CategoryPage';
 interface AH8q3dGK2f2vLZVgbRfLTjQPySe2yRaJHs {
   isUserLoggedIn: boolean;
   articles: ArticleType[];
-  categories: CategoryType[];
   status: string[];
   filters: {
     keywords: string;
@@ -54,7 +53,7 @@ class HomePage extends React.Component {
     this.state = {
       isUserLoggedIn: true,
       articles: [],
-      categories: [],
+      
       status: [
         "available",
         "visible",
@@ -144,7 +143,7 @@ class HomePage extends React.Component {
         name: article.name,
         excerpt: article.excerpt,
         description: article.description,
-
+        imageUrl: article.imageUrl,
         price: article.articlePrices[article.articlePrices.length - 1].price,
         status: article.status,
         isPromoted: article.isPromoted,
@@ -228,7 +227,7 @@ class HomePage extends React.Component {
         {this.state.articles?.map(this.singleArticle)}
       </Row>
     );
-
+   
   }
 
   private singleArticle(article: ArticleType) {
