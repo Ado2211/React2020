@@ -178,9 +178,6 @@ class HomePage extends React.Component {
 
     return (
       <>
-
-
-
         <Container>
           <RoledMainMenu role="user" />
 
@@ -195,25 +192,17 @@ class HomePage extends React.Component {
               <Card.Title>
                 <FontAwesomeIcon icon={faListAlt} /> All Articles
               </Card.Title>
-
-
               <Row>
-             
-
                 <Col xs="12" md="12" lg="12">
                   {this.showArticles()}
                 </Col>
               </Row>
-
-
             </Card.Body>
           </Card>
         </Container>
       </>
     );
   }
-
- 
 
   private showArticles() {
     if (this.state.articles?.length === 0) {
@@ -236,7 +225,4 @@ class HomePage extends React.Component {
     );
   }
 }
-
-
-
 export default HomePage
